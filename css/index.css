@@ -10,6 +10,7 @@ body {
 }
 
 /* Estos divs son los pixeles */
+
 div {
   background-color: white;
   height: 15px;
@@ -38,20 +39,24 @@ button {
   transition: all 0.25s ease-in-out 0s;
   cursor: pointer;
 }
-button:hover{
+
+button:hover {
   background: grey;
 }
+
 ul {
   list-style: none;
   padding: 0;
   margin: 20px 10px;
   text-align: left;
 }
+
 p {
   text-transform: uppercase;
   font-size: .3em;
   text-align: right;
 }
+
 h1 {
   color: white;
   margin-bottom: 15px;
@@ -67,18 +72,20 @@ h3 {
 }
 
 input[type="color"] {
-	-webkit-appearance: none;
-	border: none;
+  -webkit-appearance: none;
+  border: none;
   padding: 0;
   height: 30px;
   width: 30px;
   cursor: pointer;
 }
+
 input[type="color"]::-webkit-color-swatch-wrapper {
-	padding: 0;
+  padding: 0;
 }
+
 input[type="color"]::-webkit-color-swatch {
-	border: none;
+  border: none;
 }
 
 .color-paleta {
@@ -87,7 +94,7 @@ input[type="color"]::-webkit-color-swatch {
   width: 15px;
   cursor: pointer;
   margin: 0;
-    outline: 1px solid white;
+  outline: 1px solid white;
 }
 
 .custom {
@@ -97,6 +104,7 @@ input[type="color"]::-webkit-color-swatch {
 .cursor-personalizado {
   cursor: url(../img/cursor.png), auto;
 }
+
 .row {
   margin: 0;
   padding: 0;
@@ -106,6 +114,7 @@ main {
   width: 25%;
   padding: 0 25px;
 }
+
 #grilla-pixeles {
   background-color: white;
   width: 795px;
@@ -118,36 +127,41 @@ main {
   margin: 20px auto;
   justify-content: center;
   flex-direction: row-reverse
+}
 
-}
 #container, li, .imgs {
- display: flex;
- align-items:center;
+  display: flex;
+  align-items: center;
 }
+
 .imgs {
   flex-wrap: wrap;
 }
+
 .imgs li {
   width: 25%;
   margin: 0;
   align-items: flex-start;
 }
+
 img {
   max-width: 100%;
   height: auto;
 }
- .input-color li {
-   margin: 10px 0;
-   justify-content: space-between;
- }
+
+.input-color li {
+  margin: 10px 0;
+  justify-content: space-between;
+}
+
 #indicador-de-color {
   height: 30px;
   width: 30px;
   border: 1px solid white;
   margin: 0;
   position: relative;
-
 }
+
 #indicador-de-color:after {
   content: "";
   position: absolute;
@@ -158,6 +172,7 @@ img {
   width: 29px;
   background: url(../img/empty.gif);
 }
+
 #indicador-de-color-mensaje {
   color: white;
 }
@@ -190,33 +205,35 @@ img {
     width: 100%;
   }
 }
+
 @media only screen and (max-width: 600px) {
-    #grilla-pixeles {
-       width: 477px;
-       height: 297px;
-    }
-    div {
-      height: 9px;
-      width: 9px;
-    }
-      .imgs li {
-      width: 350px;
-      margin: 0 auto
-    }
+  #grilla-pixeles {
+    width: 477px;
+    height: 297px;
+  }
+  div {
+    height: 9px;
+    width: 9px;
+  }
+  .imgs li {
+    width: 350px;
+    margin: 0 auto
+  }
 }
+
 @media only screen and (max-width: 375px) {
   #grilla-pixeles {
-   width: 320px;
-   height: 179px;
+    width: 320px;
+    height: 179px;
   }
   div {
     height: 6px;
     width: 6px;
-    }
-    .imgs {
-      display: block;
-    }
-     .imgs li {
+  }
+  .imgs {
+    display: block;
+  }
+  .imgs li {
     width: 100px;
     margin: 0 auto;
   }
