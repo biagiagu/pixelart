@@ -20,27 +20,13 @@ var nombreColores = ['White', 'LightYellow',
 	'DimGray', 'LightSlateGray', 'DarkSlateGray', 'Black'
 ];
 
-let paleta = document.getElementById("paleta");
-let grillaPixeles = document.getElementById("grilla-pixeles");
+var paleta = document.getElementById("paleta");
+var grillaPixeles = document.getElementById("grilla-pixeles");
+var mousePresionado = false;
+
 
 //Ejecutamos las funciones que necesitamos activar al momento de cargar la pagina
 document.addEventListener("DOMContentLoaded", load);
-function load() {
-	//Activamos los colores a la paleta de colores
-	paletaDinamica(nombreColores);
-	//creamos los pixeles de la grilla
-	grillaDePixeles();
-	//Activamos el selector de colores
-	seleccionaColorDePaleta();
-	//Activamos la grilla de pixeles
-	seleccionaPixelDeGrilla();
-
-	//agrandamos el tamaño de letra de los titulos indicadores de pincel y color
-	let indicadorP = document.querySelectorAll("p");
-	for (let i = 0; i < indicadorP.length; i++) {
-		indicadorP[i].style.fontSize = "1em";
-	}
-}
 
 // Variable para guardar el elemento 'color-personalizado'
 // Es decir, el que se elige con la rueda de color.
@@ -53,9 +39,36 @@ colorPersonalizado.addEventListener('change',
 		// Completar para que cambie el indicador-de-color al colorActual
 		e=undefined;
 		cambiarColorPincel(e, colorActual);
-
 	})
 );
+
+function load() {
+	//Activamos los colores a la paleta de colores
+	paletaDinamica(nombreColores);
+	
+	//dibujamos y activamos los pixeles de la grilla
+	grillaDePixeles();
+	
+	//Activamos los eventos para saber si el boton del mouse es presionado o liberado.
+	document.addEventListener("mousedown", ()=>{mousePresionado=true});
+	document.addEventListener("mouseup", ()=>{mousePresionado=false});
+	
+	//activamos el boton BorrarTodo
+	$("#borrar").click(borrarTodo);
+	
+	//activmos las zonas clicleables de las imagenes de nuestros superheroes
+	$("ul.imgs li img").click((e)=>{cargarSuperheroe(e.target.id);});
+	
+	//activamos el boton de guardar
+	$("#guardar").click(guardarPixelArt);
+	
+	//agrandamos el tamaño de letra de los titulos indicadores de pincel y color
+	let indicadorP = document.querySelectorAll("p");
+	for (let i = 0; i < indicadorP.length; i++) {
+		indicadorP[i].style.fontSize = "1em";
+	}
+}
+
 
 //Creamos la Paleta de colores
 function paletaDinamica(nombreColores) {
@@ -66,7 +79,10 @@ function paletaDinamica(nombreColores) {
 		//le asignamos los atributos correspondientes;
 		elementoDiv.style.backgroundColor = nombreColores[i];
 		elementoDiv.className = "color-paleta";
-
+		
+		//agregamos el evento click para que cambie de color el pincel al ser clickeado
+		elementoDiv.addEventListener("click", cambiarColorPincel);
+		
 		//los agrega al elemento padre
 		paleta.appendChild(elementoDiv);
 
@@ -74,60 +90,59 @@ function paletaDinamica(nombreColores) {
 }
 
 
-//Creamos la grilla de pixeles
+//dibujamos y activamos la grilla de pixeles
 function grillaDePixeles() {
 	for (let i = 0; i < 1750; i++) {
+		//definimos los elementos de la grilla commo divs
 		let elementoGrilla = document.createElement("div");
+		
+		//agregamos el evento click a cada unos de los elementos de la grilla creado
+		elementoGrilla.addEventListener("click", pintarPixel);
+		
+		//agregamos el evento hover para permitir pintar en movimiento --Guia 2 Paso 5
+		elementoGrilla.addEventListener("mouseover", pintarPixel);
+		
+		//agregamos el elemento creado a la grilla
 		grillaPixeles.appendChild(elementoGrilla);
 	}
-}
-
-
-//selector de color de la paleta de color
-function seleccionaColorDePaleta() {
-	//seleccionamos todos los elementos que componen la paleta
-	let elementosPaleta = document.querySelectorAll("#paleta div");
-
-
-	//agregamos el evento click a cada elemento de la paleta
-	for (let i = 0; i < elementosPaleta.length; i++) {
-		elementosPaleta[i].addEventListener("click", cambiarColorPincel);
-	}
-	
 
 }
+
 
 //definimos la funcion para cambiar el color del pincel
 function cambiarColorPincel(e, colorActual) {
 	//comprobamos si e viene definido --> vendrá definido si el evento click en la paleta de colores es activado
 	if (!e){
 		//Color de fondo del indicador-de-color = Color devuelto por el seleccionador de color
-		// console.log(e);
-		// console.log(colorActual);
 		document.getElementById("indicador-de-color").style.backgroundColor = colorActual;
 	}else{
 		//Color de fondo del indicador-de-color = Color de Fondo del elemento de paleta cliqueado
 		document.getElementById("indicador-de-color").style.backgroundColor = e.target.style.backgroundColor;
-		// console.log(e);
 	}
 }
 
-//Selector de Pixel a Pintar y pintura
-function seleccionaPixelDeGrilla() {
-	//seleccionamos todos los elementos que componen la grilla de pixeles
-	let elementosGrilla = document.querySelectorAll("#grilla-pixeles div");
 
-	//agregamos el evento click a cada unos de los elementos de la grilla
-	for (let i = 0; i < elementosGrilla.length; i++) {
-		elementosGrilla[i].addEventListener("click", pintarPixel);
-
+//definimos la funcion para pintar el pixel seleccionado con el color del indicador de color
+function pintarPixel(e) {
+	//determinamos si se realizo un click o se esta pintando en movimiento --Guia 2 Paso 5
+	if(mousePresionado){
+		cambiarColorPixel();
 	}
-
-	//definimos la funcion para pintar el pixel seleccionado con el color del indicador de color
-	function pintarPixel(e) {
-		//Color de fondo del elemento cliqueado = color de fondo del indicador de color
+	//Color de fondo del elemento cliqueado = color de fondo del indicador de color
+	if (e.type=="click"){
+		cambiarColorPixel();
+	}
+	
+	function cambiarColorPixel(){
 		e.target.style.backgroundColor = document.getElementById("indicador-de-color").style.backgroundColor;
-
 	}
+}
 
+function borrarTodo() {
+	//Pedimos la confirmación para borrar la grilla
+	if (confirm("Estas seguro de borrar todo?")){
+		//Seleccionamos y borramos los pixeles de la grilla
+		let pixeles = $("#grilla-pixeles div");
+		pixeles.animate({"background-color":"withe"}, 1500);
+	}	
 }

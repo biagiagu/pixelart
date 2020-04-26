@@ -15,8 +15,22 @@ function guardarPixelArt() {
 
 // Carga a un superheroe predefinido
 function cargarSuperheroe(superheroe) {
-  var $pixeles = $("#grilla-pixeles div");
-  for (var i = 0; i < superheroe.length; i++) {
-    $pixeles[i].style.backgroundColor = superheroe[i];
-  }
+	
+	var $pixeles = $("#grilla-pixeles div");
+	
+	
+	if (superheroe=="batman"){
+		superheroe=batman;
+	} else if (superheroe=="wonder"){
+		superheroe=wonder;
+	} else if (superheroe=="flash"){
+		superheroe=flash;
+	} else {
+		superheroe=invisible;
+	}
+
+
+	for (var i = 0; i < superheroe.length; i++) {
+		$pixeles[i].style.backgroundColor = superheroe[i];
+	}
 }
