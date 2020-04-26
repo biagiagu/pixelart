@@ -102,11 +102,13 @@ function cambiarColorPincel(e, colorActual) {
 	//comprobamos si e viene definido --> vendrá definido si el evento click en la paleta de colores es activado
 	if (!e){
 		//Color de fondo del indicador-de-color = Color devuelto por el seleccionador de color
+		// console.log(e);
+		// console.log(colorActual);
 		document.getElementById("indicador-de-color").style.backgroundColor = colorActual;
 	}else{
 		//Color de fondo del indicador-de-color = Color de Fondo del elemento de paleta cliqueado
 		document.getElementById("indicador-de-color").style.backgroundColor = e.target.style.backgroundColor;
-
+		// console.log(e);
 	}
 }
 
